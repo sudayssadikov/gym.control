@@ -136,6 +136,18 @@ const initialInvoices = [
   },
 ];
 
+const initialContactInquiries = [
+  {
+    id: 'inq-1',
+    name: 'Dilshod Rahmatov',
+    phone: '+998 90 999 88 77',
+    goal: "Vazn tashlash va mushak ko'paytirish",
+    message: "Sinov darsiga yozilmoqchiman, dushanba kuni soat 18:00 ga qulay bo'ladimi?",
+    date: '2025-03-12',
+    status: 'Yangi',
+  },
+];
+
 export const useClubStore = create(
   persist(
     (set, get) => ({
@@ -150,10 +162,11 @@ export const useClubStore = create(
         set({ theme });
       },
 
+      users: DEMO_USERS,
       currentUser: DEMO_USERS[0],
       setCurrentUser: (user) => set({ currentUser: user }),
       switchDemoUser: (userId) => {
-        const target = DEMO_USERS.find((u) => u.id === userId) || null;
+        const target = get().users.find((u) => u.id === userId) || null;
         set({ currentUser: target });
         get().addToast({
           type: 'info',
@@ -162,6 +175,56 @@ export const useClubStore = create(
         });
       },
 
+      // Auth actions
+      registerUser: ({ fullName, email, phone }) => {
+        const newUser = {
+          id: 'usr-' + Date.now(),
+          fullName,
+          email,
+          phone,
+          avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80',
+          role: 'member',
+          accountStatus: 'REGISTERED_NO_SUB',
+          createdAt: new Date().toISOString().split('T')[0],
+        };
+        set({
+          users: [...get().users, newUser],
+          currentUser: newUser,
+        });
+        get().addToast({
+          type: 'success',
+          title: "Ro'yxatdan muvaffaqiyatli o'tdingiz!",
+          message: `Xush kelibsiz, ${fullName}! Endi a'zolik tarifini tanlashingiz mumkin.`,
+        });
+        return newUser;
+      },
+
+      loginUser: (identifier) => {
+        const found = get().users.find(
+          (u) =>
+            u.email.toLowerCase() === identifier.toLowerCase() ||
+            u.phone.replace(/\s+/g, '') === identifier.replace(/\s+/g, '')
+        );
+        if (found) {
+          set({ currentUser: found });
+          get().addToast({
+            type: 'success',
+            title: 'Tizimga kirildi',
+            message: `${found.fullName} xush kelibsiz!`,
+          });
+          return true;
+        } else {
+          // If not found, log in as first user or create guest session
+          get().addToast({
+            type: 'error',
+            title: 'Foydalanuvchi topilmadi',
+            message: 'Iltimos, ma\'lumotlarni tekshiring yoki ro\'yxatdan o\'ting',
+          });
+          return false;
+        }
+      },
+
+      // Subscriptions
       subscriptions: initialSubscriptions,
       buySubscription: (planId, billingCycle, paymentMethod) => {
         const user = get().currentUser;
@@ -303,6 +366,7 @@ export const useClubStore = create(
         return true;
       },
 
+      // Classes & Bookings
       classes: initialClassSessions,
       bookings: initialBookings,
 
@@ -403,6 +467,38 @@ export const useClubStore = create(
         });
       },
 
+      deleteClass: (classId) => {
+        const target = get().classes.find((c) => c.id === classId);
+        set({ classes: get().classes.filter((c) => c.id !== classId) });
+        get().addToast({
+          type: 'info',
+          title: "Mashg'ulot o'chirildi",
+          message: target ? `${target.title} jadvaldan olib tashlandi` : '',
+        });
+      },
+
+      // Contact inquiries
+      contactInquiries: initialContactInquiries,
+      submitContactInquiry: ({ name, phone, goal, message }) => {
+        const newInq = {
+          id: 'inq-' + Date.now(),
+          name,
+          phone,
+          goal: goal || "Umumiy so'rov",
+          message,
+          date: new Date().toISOString().split('T')[0],
+          status: 'Yangi',
+        };
+        set({ contactInquiries: [newInq, ...get().contactInquiries] });
+        get().addToast({
+          type: 'success',
+          title: "So'rovingiz qabul qilindi!",
+          message: "Klub menejeri 15 daqiqa ichida siz bilan bog'lanadi.",
+        });
+        return true;
+      },
+
+      // Measurements & Workouts
       measurements: initialMeasurements,
       addMeasurement: (entry) => {
         const user = get().currentUser;
@@ -472,6 +568,7 @@ export const useClubStore = create(
       name: 'apex-fitness-storage-v1',
       partialize: (state) => ({
         theme: state.theme,
+        users: state.users,
         currentUser: state.currentUser,
         subscriptions: state.subscriptions,
         bookings: state.bookings,
@@ -480,6 +577,7 @@ export const useClubStore = create(
         workoutLogs: state.workoutLogs,
         invoices: state.invoices,
         goal: state.goal,
+        contactInquiries: state.contactInquiries,
       }),
     }
   )

@@ -11,6 +11,9 @@ import { PlansPage } from './pages/PlansPage';
 import { TrainersPage } from './pages/TrainersPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AdminPage } from './pages/AdminPage';
+import { CalculatorPage } from './pages/CalculatorPage';
+import { ContactPage } from './pages/ContactPage';
+import { AboutClubPage } from './pages/AboutClubPage';
 
 export const App = () => {
   const { theme } = useClubStore();
@@ -30,6 +33,9 @@ export const App = () => {
             <Route path="/jadval" element={<SchedulePage />} />
             <Route path="/tariflar" element={<PlansPage />} />
             <Route path="/murabbiylar" element={<TrainersPage />} />
+            <Route path="/klub" element={<AboutClubPage />} />
+            <Route path="/kalkulyator" element={<CalculatorPage />} />
+            <Route path="/aloqa" element={<ContactPage />} />
             <Route path="/kabinet" element={<DashboardPage />} />
             <Route path="/admin" element={<AdminPage />} />
             {/* Fallback to Home */}

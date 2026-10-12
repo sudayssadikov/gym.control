@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useClubStore } from '../store/useClubStore';
+import { AuthModal } from './AuthModal';
 import {
   Dumbbell,
   Sun,
@@ -8,10 +9,12 @@ import {
   Menu,
   X,
   User as UserIcon,
+  LogIn,
 } from 'lucide-react';
 
 export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const location = useLocation();
   const { theme, toggleTheme, currentUser, subscriptions } = useClubStore();
 
@@ -24,8 +27,11 @@ export const Navbar = () => {
     { label: 'Jadval', path: '/jadval' },
     { label: 'Tariflar', path: '/tariflar' },
     { label: 'Murabbiylar', path: '/murabbiylar' },
-    { label: 'Shaxsiy Kabinet', path: '/kabinet' },
-    ...(currentUser?.role === 'admin' ? [{ label: 'Admin Boshqaruv', path: '/admin' }] : []),
+    { label: 'Klub haqida', path: '/klub' },
+    { label: 'Kalkulyator', path: '/kalkulyator' },
+    { label: 'Aloqa', path: '/aloqa' },
+    { label: 'Kabinet', path: '/kabinet' },
+    ...(currentUser?.role === 'admin' ? [{ label: 'Admin', path: '/admin' }] : []),
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -113,7 +119,7 @@ export const Navbar = () => {
           style={{
             display: 'none',
             alignItems: 'center',
-            gap: '8px',
+            gap: '4px',
           }}
           className="desktop-nav"
         >
@@ -124,11 +130,11 @@ export const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 style={{
-                  padding: '8px 16px',
+                  padding: '7px 12px',
                   borderRadius: 'var(--radius-md)',
-                  fontSize: '0.9375rem',
-                  fontWeight: active ? 600 : 500,
-                  color: active ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
+                  fontSize: '0.875rem',
+                  fontWeight: active ? 700 : 500,
+                  color: active ? 'var(--color-accent)' : 'var(--color-text-secondary)',
                   backgroundColor: active ? 'var(--color-accent-muted)' : 'transparent',
                   border: active ? '1px solid var(--color-accent)' : '1px solid transparent',
                   transition: 'all var(--transition-fast)',
@@ -145,15 +151,15 @@ export const Navbar = () => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
+            gap: '10px',
           }}
         >
           {/* Theme Switcher Button */}
           <button
             onClick={toggleTheme}
             style={{
-              width: '40px',
-              height: '40px',
+              width: '38px',
+              height: '38px',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--color-border-subtle)',
               backgroundColor: 'var(--color-bg-secondary)',
@@ -166,18 +172,18 @@ export const Navbar = () => {
             title={theme === 'dark' ? "Yorug' rejimga o'tish" : "Qorong'i rejimga o'tish"}
             aria-label="Mavzuni almashtirish"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
           </button>
 
-          {/* User Status / Profile Button */}
+          {/* User Status / Profile Button or Log In Button */}
           {currentUser ? (
             <Link
               to="/kabinet"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '10px',
-                padding: '6px 12px 6px 6px',
+                gap: '8px',
+                padding: '5px 12px 5px 5px',
                 borderRadius: 'var(--radius-full)',
                 backgroundColor: 'var(--color-bg-secondary)',
                 border: '1px solid var(--color-border-subtle)',
@@ -188,8 +194,8 @@ export const Navbar = () => {
                 src={currentUser.avatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80'}
                 alt={currentUser.fullName}
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '30px',
+                  height: '30px',
                   borderRadius: '50%',
                   objectFit: 'cover',
                 }}
@@ -214,29 +220,32 @@ export const Navbar = () => {
               </div>
             </Link>
           ) : (
-            <Link
-              to="/tariflar"
+            <button
+              onClick={() => setAuthModalOpen(true)}
               style={{
-                padding: '9px 18px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 16px',
                 borderRadius: 'var(--radius-md)',
                 backgroundColor: 'var(--color-accent)',
                 color: 'var(--color-accent-contrast)',
                 fontWeight: 700,
-                fontSize: '0.875rem',
-                textDecoration: 'none',
+                fontSize: '0.8125rem',
+                cursor: 'pointer',
                 boxShadow: 'var(--shadow-glow)',
               }}
             >
-              A'zo bo'lish
-            </Link>
+              <LogIn size={15} /> Kirish
+            </button>
           )}
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             style={{
-              width: '40px',
-              height: '40px',
+              width: '38px',
+              height: '38px',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--color-border-subtle)',
               backgroundColor: 'var(--color-bg-secondary)',
@@ -266,7 +275,7 @@ export const Navbar = () => {
             padding: '24px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px',
+            gap: '10px',
             zIndex: 999,
             overflowY: 'auto',
           }}
@@ -279,9 +288,9 @@ export const Navbar = () => {
                 to={link.path}
                 onClick={() => setMobileOpen(false)}
                 style={{
-                  padding: '14px 18px',
+                  padding: '12px 16px',
                   borderRadius: 'var(--radius-md)',
-                  fontSize: '1.0625rem',
+                  fontSize: '1rem',
                   fontWeight: active ? 700 : 500,
                   color: active ? 'var(--color-accent)' : 'var(--color-text-primary)',
                   backgroundColor: active ? 'var(--color-accent-muted)' : 'var(--color-bg-secondary)',
@@ -297,7 +306,30 @@ export const Navbar = () => {
             );
           })}
 
-          <div style={{ marginTop: 'auto', paddingTop: '24px', borderTop: '1px solid var(--color-border-subtle)' }}>
+          <div style={{ marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid var(--color-border-subtle)' }}>
+            {!currentUser ? (
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  setAuthModalOpen(true);
+                }}
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  textAlign: 'center',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: 'var(--color-accent)',
+                  color: 'var(--color-accent-contrast)',
+                  fontWeight: 700,
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  marginBottom: '10px',
+                }}
+              >
+                Kirish / Ro'yxatdan o'tish
+              </button>
+            ) : null}
+
             <Link
               to="/tariflar"
               onClick={() => setMobileOpen(false)}
@@ -307,8 +339,9 @@ export const Navbar = () => {
                 padding: '14px',
                 textAlign: 'center',
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--color-accent)',
-                color: 'var(--color-accent-contrast)',
+                backgroundColor: 'var(--color-bg-secondary)',
+                border: '1px solid var(--color-border-medium)',
+                color: 'var(--color-text-primary)',
                 fontWeight: 700,
                 fontSize: '1rem',
               }}
@@ -319,8 +352,12 @@ export const Navbar = () => {
         </div>
       )}
 
+      {authModalOpen && (
+        <AuthModal onClose={() => setAuthModalOpen(false)} />
+      )}
+
       <style>{`
-        @media (min-width: 900px) {
+        @media (min-width: 1080px) {
           .desktop-nav {
             display: flex !important;
           }
