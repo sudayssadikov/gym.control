@@ -1,0 +1,81 @@
+export const clubReviews = [
+  {
+    id: 'rev-1',
+    authorName: 'Bobur Mirzayev',
+    authorRole: "IT Tadbirkor / 1 yillik PRO a'zo",
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+    rating: 5,
+    comment: "Toshkentda bunday darajadagi zallar kam. Technogym uskunalari har doim soz, dush va Fin saunasi esa ishdan keyin haqiqiy najot. Farhod murabbiy bilan krossfit darslarida 8 oyda 14 kg vazn yo'qotdim!",
+    date: '2025-01-14',
+    resultBadge: '-14 kg vazn tashladi',
+  },
+  {
+    id: 'rev-2',
+    authorName: 'Dilnoza Karimova',
+    authorRole: "Dizayner / 6 oylik a'zo",
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
+    rating: 5,
+    comment: "Malika bilan yoga va pilates darslari hayotimni o'zgartirdi. Kun bo'yi kompyuterda o'tirishdan belim og'rirdi, hozir esa butun vujudimda yengillik va quvvat his qilaman. Zalning estetikasi va tozaligi 10/10.",
+    date: '2025-02-02',
+    resultBadge: "Bel og'riqlaridan xalos bo'ldi",
+  },
+  {
+    id: 'rev-3',
+    authorName: "Otabek Yo'ldoshev",
+    authorRole: "Moliya direktori / VIP Elite a'zo",
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
+    rating: 5,
+    comment: "VIP xizmat mutlaqo o'z narxiga arziydi. 24/7 kirish imkoniyati men kabi tig'iz jadvaldagi insonlar uchun juda muhim. Shaxsiy murabbiy Jasur har bir trenirovkani ilmiy asosda olib boradi.",
+    date: '2025-02-18',
+    resultBadge: '+6.5 kg toza mushak',
+  },
+  {
+    id: 'rev-4',
+    authorName: 'Madina Shavkatova',
+    authorRole: "Marketing mutaxassisi / PRO a'zo",
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+    rating: 5,
+    comment: "Shahnoza opaning darslari shunchaki ajoyib! Qizlar uchun mo'ljallangan muhit, shaxsiy InBody tahlillari va qomat shakllantirish bo'yicha maslahatlar natijasida o'zim xohlagan formaga erishdim.",
+    date: '2025-03-01',
+    resultBadge: '-9 kg va qomat relyefi',
+  },
+];
+
+export const clubFAQs = [
+  {
+    id: 'faq-1',
+    category: "A'zolik",
+    question: "A'zolikni xarid qilgandan so'ng qachon boshlanadi?",
+    answer: "A'zolik siz zalga birinchi marta tashrif buyurgan kuningizdan boshlab faollashadi (xarid qilingan kundan boshlab ko'pi bilan 30 kun ichida faollashtirish mumkin).",
+  },
+  {
+    id: 'faq-2',
+    category: 'Muzlatish',
+    question: "Obunani vaqtincha muzlatish qanday amalga oshiriladi?",
+    answer: "Shaxsiy kabinetingiz orqali yoki administratorga murojaat qilib, o'z tarifingizga qarab yiliga 14 kundan 60 kungacha bepul muzlatish imkoniyatidan foydalanishingiz mumkin.",
+  },
+  {
+    id: 'faq-3',
+    category: "Mashg'ulotlar",
+    question: "Guruh darslariga oldindan yozilish majburiymi?",
+    answer: "Ha, har bir guruh darsi uchun zallar sig'imi belgilangan (10-20 kishi). Har bir a'zo uchun qulaylik yaratish maqsadida, darslarga sayt orqali 1 marta bosish bilan oldindan ro'yxatdan o'tiladi.",
+  },
+  {
+    id: 'faq-4',
+    category: "To'lov",
+    question: "Qanday to'lov usullari qabul qilinadi?",
+    answer: "Biz Payme, Click, Uzum Bank ilovalari orqali onlayn to'lovlarni, shuningdek, zalning o'zida istalgan bank kartalari (Uzcard, Humo, Visa, Mastercard) yoki naqd pulda to'lashni qabul qilamiz.",
+  },
+  {
+    id: 'faq-5',
+    category: 'Qulayliklar',
+    question: 'Zalda dush, sauna va sochiq xizmati bormi?',
+    answer: "Albatta! Barcha a'zolarimiz uchun keng kiyinish xonalari, dush kabinalari mavjud. PRO va VIP tariflarida Fin saunasi va bepul toza sochiq berish xizmati kiritilgan.",
+  },
+  {
+    id: 'faq-6',
+    category: 'Murabbiylar',
+    question: "Shaxsiy murabbiy bilan qanday shug'ullansa bo'ladi?",
+    answer: "Saytimizning 'Murabbiylar' bo'limida istalgan mutaxassis profilini tanlab, uning bo'sh vaqtiga shaxsiy mashg'ulot band qilishingiz yoki VIP a'zolik tarifini xarid qilishingiz mumkin.",
+  },
+];
